@@ -1,51 +1,61 @@
 
-var $ = function(id){
-  return document.getElementById(id);
-};
+  var $ = function(id){
+    return document.getElementById(id);
+  };
 
-function getData() {
-  var data = [];
-  for (var i = 0; i < $('source').childElementCount; i++) {
-    var li = $('source').children[i];
-    var strCity = li.innerHTML.split("空气质量")[0];
-    var num = Number(li.children[0].innerHTML);
-    data.push([strCity, num]);
+  var aqiData = {};
+  function addAqiData() {
+    var city = $('aqi-city-input').value.trim();
+    var aqi = $('aqi-value-input').value.trim();
+    if (!city.match(/^[A-Za-z\u4E00-\u9FA5]+$/) ) {
+      alert("城市名必须为中英文字符！");
+      return;
     }
-    return data;  
+
+    if (!aqi.match(/^\d+$/)) {
+      alert("空气质量必须为整数！");
+      return;
+    }
+    aqiData[city] = aqi;
   }
 
+  /**
+   * 渲染aqi-table表格
+   */
+  function renderAqiList( ) {
+    var items = '<tr><td>城市</td><td>空气质量</td><td>操作</td></tr>';
+    for (var city in aqiData) {
+      items += '<tr><td>' + city + '</td><td>' + aqiData[city] + '</td><td><button data-city="'+city+'">删除</button></td></tr>';
+    }
+    $('aqi-table').innerHTML = items;
+  }
 
+  /**
+   * 点击add-btn时的处理逻辑
+   * 获取用户输入，更新数据，并进行页面呈现的更新
+   */
+  function addBtnHandle() {
+    addAqiData();
+    renderAqiList();
+  }
 
-function sortAqiData(data) {
-  data.sort(function(a, b){
-   return a[1]-b[1];
-  });
-  return data;
-  // alert(data);
-}
+  /**
+   * 点击各个删除按钮的时候的处理逻辑
+   * 获取哪个城市数据被删，删除数据，更新表格显示
+   */
+  function delBtnHandle(city) {
+    // do sth.
+    delete aqiData[event.target.dataset.city];
+    renderAqiList();
+  }
 
+  function init() {
 
-function render(data) {
-  var items = '';
-  for (var i = 0; i < data.length; i++) {
-   items += '<li>第' + (i+1) + '名：' + data[i][0] + '空气质量：<b> '+ data[i][1] + '</b> </li>';
-   }
-   $('resort').innerHTML = items;
-}
- 
+    // 在这下面给add-btn绑定一个点击事件，点击时触发addBtnHandle函数
+    $('add-btn').addEventListener('click', addBtnHandle);
+    // 想办法给aqi-table中的所有删除按钮绑定事件，触发delBtnHandle函数
+    $('aqi-table').addEventListener('click', delBtnHandle);;
+  }
 
-function btnHandle() {
-  var aqiData = getData();
-  aqiData = sortAqiData(aqiData);
-  render(aqiData);
-  $('sort-btn').disabled = true; 
-
-}
-
-
-function init() {
-  $('sort-btn').onclick = btnHandle;
-}
-
-init();
+  init();
 
