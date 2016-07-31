@@ -2,28 +2,31 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>零基础JavaScript编码（三）</title>
+    <title>零基础JavaScript编码（二）</title>
   </head>
 <body>
 
-  <div>
-    <label>城市名称：<input id="aqi-city-input" type="text"></label><br>
-    <label>空气质量指数：<input id="aqi-value-input" type="text"></label><br>
-    <button id="add-btn">确认添加</button>
-  </div>
-  <table id="aqi-table">
-  <!-- 
-    <tr>
-      <td>城市</td><td>空气质量</td><td>操作</td>
-    </tr>
-    <tr>
-      <td>北京</td><td>90</td><td><button>删除</button></td>
-    </tr>
-    <tr>
-      <td>北京</td><td>90</td><td><button>删除</button></td>
-    </tr>
-   -->
-  </table>
+  <ul id="source">
+    <li>北京空气质量：<b>90</b></li>
+    <li>上海空气质量：<b>70</b></li>
+    <li>天津空气质量：<b>80</b></li>
+    <li>广州空气质量：<b>50</b></li>
+    <li>深圳空气质量：<b>40</b></li>
+    <li>福州空气质量：<b>32</b></li>
+    <li>成都空气质量：<b>90</b></li>
+  </ul>
+
+  <ul id="resort">
+    <!-- 
+    <li>第一名：北京空气质量：<b>90</b></li>
+    <li>第二名：北京空气质量：<b>90</b></li>
+    <li>第三名：北京空气质量：<b>90</b></li>
+     -->
+
+  </ul>
+
+  <button id="sort-btn">排序</button>
+
 <script src="javascript.js"></script>
 </body>
 </html>
